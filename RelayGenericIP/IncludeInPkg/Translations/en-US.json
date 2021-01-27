@@ -1,0 +1,21 @@
+{
+    "RelayStateLabel": "State",
+    "OffLabel": "Off",
+    "OffWithDelayLabel": "Delayed Off",
+    "DelayLabel": "Delay",
+    "OnLabel": "On",
+    "OnWithAutoOffLabel": "On With Auto Off",
+    "TurnedOffLabel": "Turned Off",
+    "TurningOffLabel": "Turning Off...",
+    "TurnedOnLabel": "Turned On",
+    "TurningOnLabel": "Turning On...",
+    "ErrorLabel": "ERROR!!!",
+    "SettingsLabel": "Settings",
+    "AutoOffLabel": "Auto Off",
+    "AutoOffTimeLabel": "Auto Off Time",
+    "AutoOffTimeSecLabel": "Auto Off Time (min)",
+    "EnableAutoOffLabel": "Enable Auto Off",
+    "DisableAutoOffLabel": "Disable Auto Off",
+    "SetAutoOffTimeLabel": "Set Auto Off Time",
+    "TimeLabel": "Time"
+}

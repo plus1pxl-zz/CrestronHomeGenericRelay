@@ -1,0 +1,105 @@
+﻿{
+    "CrestronSerialDeviceApi": {
+        "DeviceSupport": {
+        },
+        "DeviceSupport2": [
+        ],
+        "GeneralInformation": {
+            "DeviceType": "Controlled Relay",
+            "Manufacturer": "Generic",
+            "BaseModel": "Crestron Controlled Relay",
+            "VersionDate": "2021-01-22 16:04:04.000",
+            "DriverVersion": "1.0.000.0000",
+            "SdkVersion": "4.1.000.0016",
+            "Description": "Lock",
+            "Guid": "4bd91185-143f-4545-b456-3f0013a30360",
+            "ExtensionDeviceData": {
+                "IsExtensionDevice": true,
+                "IsMediaDevice": false,
+                "IsMediaSource": false
+            },
+            "SupportedSeries": [
+                "Relay Series"
+            ],
+            "SupportedModels": [
+                "Crestron Controlled Relay",
+                "3rd Party Controlled Relay"
+            ]
+        },
+        "Api": {
+            "Communication": {
+                "CommunicationType": 1,
+                "Protocol": -1,
+                "Baud": -1,
+                "Parity": -1,
+                "HwHandshake": -1,
+                "SwHandshake": -1,
+                "DataBits": 0,
+                "StopBits": -1,
+                "Port": 5001,
+                "EnableAutoPolling": true,
+                "EnableAutoReconnect": true,
+                "TimeBetweenCommands": 250,
+                "ResponseTimeout": 3000,
+                "WaitForResponse": false,
+                "IpProtocol": 0,
+                "IsUserAdjustable": false,
+                "Authentication": {
+                    "Type": "None",
+                    "Required": false
+                },
+                "IsSecure": false,
+                "UserAdjustableProperties": [
+
+                ],
+                "DeviceId": 0
+            },
+            "CustomCommands": [
+                {
+                    "Name": "PowerOn",
+                    "Command": "ON"
+                },
+                {
+                    "Name": "PowerOff",
+                    "Command": "OFF"
+                },
+                {
+                    "Name": "PowerToggle",
+                    "Command": "TOGGLE"
+                },
+                {
+                    "Name": "PowerPoll",
+                    "Command": "STATUS"
+                }
+            ]
+        },
+        "UserAttributes": [
+            {
+                "Label": "On Feedback Icon",
+                "Description": "Enter icon name from available list of extension device icons.",
+                "ParameterId": "onIcon",
+                "TypeName": "Custom",
+                "RequiredForConnection": "None",
+                "Persistent": true,
+                "Data": {
+                    "DataType": "String",
+                    "DefaultValue": "icRemoteButtonGreen",
+                    "Mask": ""
+                }
+            },
+            {
+                "Label": "Off Feedback Icon",
+                "Description": "Enter icon name from available list of extension device icons.",
+                "ParameterId": "offIcon",
+                "TypeName": "Custom",
+                "RequiredForConnection": "None",
+                "Persistent": true,
+                "Data": {
+                    "DataType": "String",
+                    "DefaultValue": "icRemoteButtonRed",
+                    "Mask": ""
+                }
+            }
+        ]
+    }
+}
