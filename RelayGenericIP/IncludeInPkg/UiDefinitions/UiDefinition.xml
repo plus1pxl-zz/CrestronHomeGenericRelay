@@ -2,7 +2,7 @@
 <uidefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://prd-use-rad-assets.azurewebsites.net/ExtensionsSchemaDefinition_v1_0.xsd">
     <version ver="1.0"/>
 
-    <tile icon="{RelayStateIcon}" secondaryicon="{}" status="{RelayState}" action="command:PowerToggle" navigation="show:MainPage" showinhomepage="#false" showinroompage="#true"/>
+    <tile icon="{RelayStateIcon}" secondaryicon="{}" status="{RelayState}" action="command:PowerToggle" navigation="show:MainPage" showinhomepage="#true" showinroompage="#true"/>
 
     <layouts>
         

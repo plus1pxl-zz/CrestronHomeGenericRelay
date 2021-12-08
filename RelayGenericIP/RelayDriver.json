@@ -10,8 +10,8 @@
             "BaseModel": "Crestron Controlled Relay",
             "VersionDate": "2021-01-22 16:04:04.000",
             "DriverVersion": "1.0.000.0000",
-            "SdkVersion": "4.1.000.0016",
-            "Description": "Lock",
+            "SdkVersion": "7.0.000.0012",
+            "Description": "3rd party controlled relay via crestron processor or another IO TCP/IP controller",
             "Guid": "4bd91185-143f-4545-b456-3f0013a30360",
             "ExtensionDeviceData": {
                 "IsExtensionDevice": true,
@@ -74,6 +74,7 @@
             ]
         },
         "UserAttributes": [
+            /*
             {
                 "Label": "On Feedback Icon",
                 "Description": "Enter icon name from available list of extension device icons.",
@@ -100,6 +101,7 @@
                     "Mask": ""
                 }
             }
+            */
         ]
     }
 }

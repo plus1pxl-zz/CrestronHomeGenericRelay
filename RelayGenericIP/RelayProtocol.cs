@@ -76,6 +76,7 @@ namespace RelayGenericIP
             if (connection == _isConnected) return;
             _isConnected = connection;
             base.ConnectionChanged(connection);
+            if (connection) Poll();
             // debugging
             if (_consoleDebuggingEnabled) CrestronConsole.PrintLine($"_isConnected field is set to:{_isConnected}");
         }
@@ -102,24 +103,20 @@ namespace RelayGenericIP
         public override void DataHandler(string rx)
         {
 
-            if (rx.ToLower().Contains("is on") && _relayState != RelayState.TurnedOn)
+            if (rx.ToLower().Contains("is on")) // && _relayState != RelayState.TurnedOn
             {
                 _relayState = RelayState.TurnedOn;
-                if (FeedbackChanged != null)
-                    this.FeedbackChanged(this, new ValueEventArgs<RelayState>(_relayState));
             }
-            else if (rx.ToLower().Contains("is off") && _relayState != RelayState.TurnedOff)
+            else if (rx.ToLower().Contains("is off")) //  && _relayState != RelayState.TurnedOff
             {
                 _relayState = RelayState.TurnedOff;
-                if (FeedbackChanged != null)
-                    this.FeedbackChanged(this, new ValueEventArgs<RelayState>(_relayState));
             }
             else if (rx.ToLower().Contains("error"))
             {
                 _relayState = RelayState.Error;
-                if (FeedbackChanged != null)
-                    this.FeedbackChanged(this, new ValueEventArgs<RelayState>(_relayState));
             }
+
+            FeedbackChanged?.Invoke(this, new ValueEventArgs<RelayState>(_relayState));
         }
 
         public override void SetUserAttribute(string attributeId, string attributeValue)
@@ -132,7 +129,7 @@ namespace RelayGenericIP
                     
                     string[] attributeData = { attributeId, attributeValue};
                     if (UserAttributeChanged != null)
-                        this.UserAttributeChanged(this, new ValueEventArgs<string[]>(attributeData));
+                        this.UserAttributeChanged.Invoke(this, new ValueEventArgs<string[]>(attributeData));
                 }
             }
         }

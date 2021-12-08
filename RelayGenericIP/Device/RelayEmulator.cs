@@ -6,10 +6,12 @@
 
 	public class RelayEmulator
 	{
-        private readonly CTimer _autoOffTimer;
+        public event EventHandler<StateChangeEventArgs> StateChangedEvent;
+
+		private readonly CTimer _autoOffTimer;
         private TurningOnCallbackObject _turningOnInfo = new TurningOnCallbackObject();
-        private RelayState _relayState = RelayState.TurnedOff;
-        private bool _autoOff = true;
+        private RelayState _relayState = RelayState.TurningOff;
+        private bool _autoOff;
 		private int _autoOffTime = 30;
 
 		public RelayEmulator()
@@ -27,7 +29,7 @@
 					return;
 
 				_relayState = value;
-				StateChangedEvent.Invoke(this, new StateChangeEventArgs(EventType.RelayStateChanged, _relayState));
+				StateChangedEvent?.Invoke(this, new StateChangeEventArgs(EventType.RelayStateChanged, _relayState));
 			}
 		}
 
@@ -40,7 +42,7 @@
 					return;
 
 				_autoOff = value;
-				StateChangedEvent.Invoke(this, new StateChangeEventArgs(EventType.AutoOffChanged, _autoOff));
+				StateChangedEvent?.Invoke(this, new StateChangeEventArgs(EventType.AutoOffChanged, _autoOff));
 			}
 		}
 
@@ -53,7 +55,7 @@
 					return;
 
 				_autoOffTime = value;
-				StateChangedEvent.Invoke(this, new StateChangeEventArgs(EventType.AutoOffTimeChanged, _autoOffTime));
+				StateChangedEvent?.Invoke(this, new StateChangeEventArgs(EventType.AutoOffTimeChanged, _autoOffTime));
 			}
 		}
 
@@ -117,10 +119,10 @@
 		{
 			var relayEvent = new RelayEvent(eventType, success, time);
 
-			StateChangedEvent.Invoke(this, new StateChangeEventArgs(EventType.RelayEvent, relayEvent));
+			StateChangedEvent?.Invoke(this, new StateChangeEventArgs(EventType.RelayEvent, relayEvent));
 		}
 
-		public event EventHandler<StateChangeEventArgs> StateChangedEvent;
+
 	}
 
     public class RelayEvent

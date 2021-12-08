@@ -96,7 +96,7 @@
 			: base()
         {
             this._consoleDebuggingEnabled = true;
-			//AddUserAttributes();
+			AddUserAttributes();
 			CreateDeviceDefinition();
 		}
 
@@ -192,7 +192,7 @@
 				tcpTransport.Initialize(ipAddress, port);
 				this.ConnectionTransport = tcpTransport;
 				tcpTransport.DriverID = DriverID;
-                base.UserAttributesChanged += RelayDriverIPUserAttributesChanged;
+                base.UserAttributesChanged += RelayDriverIpUserAttributesChanged;
 
 				_relayProtocol = new RelayProtocol(this.ConnectionTransport, base.Id, PollingInterval, _consoleDebuggingEnabled)
 				{
@@ -200,11 +200,13 @@
 					CustomLogger = this.InternalCustomLogger
                 };
 
+                base.DeviceProtocol = _relayProtocol;
+                base.DeviceProtocol.Initialize(DriverData);
                 _relayProtocol.RxOut += SendRxOut;
 				_relayProtocol.ConnectedChanged += ProtocolConnectedChanged;
                 _relayProtocol.UserAttributeChanged += ProtocolAttributeChanged;
                 _relayProtocol.FeedbackChanged += ProtocolFeedbackChanged;
-				_relayProtocol.Initialize(DriverData);
+				
 
 				_relayEmulator = new RelayEmulator();
 				_relayEmulator.StateChangedEvent += RelayEmulatorRelayStateChangedEvent;
@@ -226,7 +228,7 @@
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-        private void RelayDriverIPUserAttributesChanged(object sender, UserAttributeListEventArgs e)
+        private void RelayDriverIpUserAttributesChanged(object sender, UserAttributeListEventArgs e)
         {
 			if (_consoleDebuggingEnabled) CrestronConsole.PrintLine($"SetUserAttribute {sender.ToString()} to bool:{e.ToString()}");
 		}
@@ -239,14 +241,14 @@
 		{
 			base.Connect();
             UpdateStateIcons();
-			CrestronConsole.PrintLine("In Connect()");
+			//CrestronConsole.PrintLine("In Connect()");
 			Refresh();
         }
 
 		public override void Reconnect()
 		{
 			base.Reconnect();
-            CrestronConsole.PrintLine("In Reconnect()");
+            //CrestronConsole.PrintLine("In Reconnect()");
 			UpdateStateIcons();
         }
 
@@ -336,6 +338,21 @@
 		}
 
 		#endregion
+
+        #region Programmable Events
+
+        [ProgrammableEvent(TurnedOnLabel)]
+        [TriggeredBy(OnLabel)]
+        public event EventHandler TurnedOn;
+
+        [ProgrammableEvent(TurnedOffLabel)]
+        [TriggeredBy(OffLabel, OffWithDelayLabel)]
+        public event EventHandler TurnedOff;
+
+        [ProgrammableEvent(ErrorLabel)]
+        public event EventHandler Error;
+
+        #endregion
 
 		#region Private Methods
 
@@ -450,6 +467,7 @@
 				case RelayState.TurnedOn:
 					_relayStateProperty.Value = TurnedOnLabel;
 					_relayStateIconProperty.Value = _onIcon;
+					RaiseTurnedOnEvent();
 					break;
 				case RelayState.TurningOn:
 					_relayStateProperty.Value = TurningOnLabel;
@@ -459,6 +477,7 @@
 				case RelayState.TurnedOff:
 					_relayStateProperty.Value = TurnedOffLabel;
 					_relayStateIconProperty.Value = _offIcon;
+					RaiseTurnedOffEvent();
 					break;
 				case RelayState.TurningOff:
 					_relayStateProperty.Value = TurningOffLabel;
@@ -468,6 +487,7 @@
 				case RelayState.Error:
                     _relayStateProperty.Value = ErrorLabel;
                     _relayStateIconProperty.Value = ErrorIcon;
+					RaiseErrorEvent();
                     break;
 			}
 		}
@@ -478,26 +498,48 @@
                 "onIcon",
                 "Status On Icon",
                 "Enter icon name from available list of extension device icons. Leave empty for default icon",
-                false,
+                true,
                 UserAttributeRequiredForConnectionType.None,
                 UserAttributeDataType.String,
-                "");
+                "icRemoteButtonGreen");
 
             AddUserAttribute(
                 UserAttributeType.Custom,
                 "offIcon",
                 "Status Off Icon",
                 "Enter icon name from available list of extension device icons. Leave empty for default icon",
-                false,
+                true,
                 UserAttributeRequiredForConnectionType.None,
                 UserAttributeDataType.String,
-                "");
+                "icRemoteButtonRed");
 
-            UpdateStateIcons();
+
+			UpdateStateIcons();
+        }
+
+        private void RaiseTurnedOnEvent()
+        {
+            var turnedOn = TurnedOn;
+
+            turnedOn?.Invoke(this, new EventArgs());
+        }
+
+        private void RaiseTurnedOffEvent()
+        {
+            var turnedOff = TurnedOff;
+
+            turnedOff?.Invoke(this, new EventArgs());
+        }
+
+        private void RaiseErrorEvent()
+        {
+            var error = Error;
+
+            error?.Invoke(this, new EventArgs());
         }
 
 
-        private void UpdateStateIcons()
+		private void UpdateStateIcons()
         {
             var userAttributes = RetrieveUserAttributes();
 

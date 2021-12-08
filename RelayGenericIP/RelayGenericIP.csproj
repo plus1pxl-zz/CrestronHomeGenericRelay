@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crestron.DeviceDrivers.API">
+      <HintPath>..\..\..\ccdsdk_6_00_000_0025\SDK\Libraries\Crestron.DeviceDrivers.API.dll</HintPath>
+    </Reference>
     <Reference Include="Crestron.SimplSharpPro.AudioDistribution, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1099c178b3b54c3b, processorArchitecture=MSIL">
       <HintPath>..\packages\Crestron.SimplSharp.SDK.ProgramLibrary.2.14.134\lib\net47\Crestron.SimplSharpPro.AudioDistribution.dll</HintPath>
     </Reference>
@@ -86,7 +89,7 @@
     </Reference>
     <Reference Include="RADCommon, Version=4.1.0.16, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\CCD-SDK_4.1.000.0016\SDK\Libraries\RADCommon.dll</HintPath>
+      <HintPath>..\..\..\ccdsdk_6_00_000_0025\SDK\Libraries\RADCommon.dll</HintPath>
     </Reference>
     <Reference Include="SimplSharpAutoUpdateInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1099c178b3b54c3b, processorArchitecture=MSIL">
       <HintPath>..\packages\Crestron.SimplSharp.SDK.Library.2.14.134\lib\net47\SimplSharpAutoUpdateInterface.dll</HintPath>
@@ -148,11 +151,10 @@
     <None Include="IncludeInPkg\Translations\en-US.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="IncludeInPkg\Translations\es-MX.json" />
-    <None Include="packages.config" />
     <EmbeddedResource Include="RelayDriver.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
